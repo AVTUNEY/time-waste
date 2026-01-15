@@ -11,7 +11,6 @@ theme = "gokarna"
   dateFormat = "Jan 2, 2006"
   description = "Notes, projects, and thoughts."
   displayReadingTime = true
-  footer = "Built with Hugo and Gokarna"
   fontSize = "1.1rem"
   metaKeywords = ["blog", "notes", "hugo"]
   numberPostsOnHomePage = 6
