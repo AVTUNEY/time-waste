@@ -1,6 +1,6 @@
 baseURL = "https://avtandili.ge/"
 languageCode = "en-us"
-title = "Avtandil's Engineering Notes"
+title = "Avtandil's Dev Log"
 theme = "gokarna"
 
 [params]
