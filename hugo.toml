@@ -39,9 +39,7 @@ theme = "gokarna"
           if (stored === "dark" || stored === "light") {
             return stored;
           }
-          return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
+          return "dark";
         }
 
         function giscusThemeFor(theme) {
@@ -97,16 +95,7 @@ theme = "gokarna"
         }
 
         function bindSystemTheme() {
-          if (!window.matchMedia) {
-            return;
-          }
-          var media = window.matchMedia("(prefers-color-scheme: dark)");
-          media.addEventListener("change", function(event) {
-            if (localStorage.getItem(THEME_PREF_STORAGE_KEY)) {
-              return;
-            }
-            setGiscusTheme(event.matches ? "dark" : "light");
-          });
+          return;
         }
 
         window.addEventListener("message", function(event) {
