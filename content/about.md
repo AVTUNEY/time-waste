@@ -16,4 +16,4 @@ This blog is where I write about software engineering in the real world, .NET an
 
 No hype. No influencer nonsense. Just practical engineering.
 
-{{< figure src="/images/azdevsummit.jpeg" title="Speaking at Azure Dev Summit" >}}
+{{< figure src="/images/azdevsummit.jpeg" title="Azure Dev Summit 2025" >}}
