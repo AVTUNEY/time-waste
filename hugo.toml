@@ -1,6 +1,6 @@
 baseURL = "https://avtandili.ge/"
 languageCode = "en-us"
-title = "My Hugo Site"
+title = "Avtandil's Engineering Notes"
 theme = "gokarna"
 
 [params]
@@ -19,10 +19,11 @@ theme = "gokarna"
   togglePreviousAndNextButtons = true
 
   socialIcons = [
-    {name = "github", url = "https://github.com/your-handle"},
-    {name = "twitter", url = "https://x.com/your-handle"},
-    {name = "linkedin", url = "https://www.linkedin.com/in/your-handle"},
-    {name = "email", url = "mailto:hello@example.com"}
+    {name = "github", url = "https://github.com/AVTUNEY"},
+    {name = "twitter", url = "https://x.com/avtuney_?s=21"},
+    {name = "linkedin", url = "https://www.linkedin.com/in/avtuney/"},
+    {name = "stackoverflow", url = "https://stackoverflow.com/users/12242162/avtuney"},
+    {name = "email", url = "mailto:a.ushikishvili@gmail.com"}
   ]
 
   customCommentHTML = """
