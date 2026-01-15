@@ -1,0 +1,54 @@
+:root {
+  --warm-ink: #2a1f1a;
+  --warm-muted: #6e5a50;
+  --warm-border: #e2d7c9;
+}
+
+html {
+  background: radial-gradient(1200px 600px at 10% -10%, #fff3e0 0%, #f7f1e8 45%, #f2e8db 100%);
+  color: var(--warm-ink);
+  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+}
+
+body {
+  background: transparent;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.nav-brand,
+.post-title a {
+  font-family: "Fraunces", "Times New Roman", serif;
+  letter-spacing: 0.2px;
+}
+
+a {
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.post-date,
+.post-tags,
+.list-posts,
+.post-content p {
+  color: var(--warm-muted);
+}
+
+.post-content {
+  color: var(--warm-ink);
+}
+
+code,
+pre,
+pre code {
+  font-family: "JetBrains Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.95em;
+}
+
+blockquote {
+  border-left-color: var(--warm-border);
+}
