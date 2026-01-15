@@ -1,0 +1,58 @@
+baseURL = "http://localhost:1313/"
+languageCode = "en-us"
+title = "My Hugo Site"
+theme = "gokarna"
+
+[params]
+  accentColor = "#E4572E"
+  avatarAltText = "Site avatar"
+  avatarSize = "size-m"
+  avatarURL = "/images/avatar.svg"
+  dateFormat = "Jan 2, 2006"
+  description = "Notes, projects, and thoughts."
+  displayReadingTime = true
+  footer = "Built with Hugo and Gokarna"
+  fontSize = "1.1rem"
+  metaKeywords = ["blog", "notes", "hugo"]
+  numberPostsOnHomePage = 6
+  showBackToTopButton = true
+  showPostsOnHomePage = "recent"
+  togglePreviousAndNextButtons = true
+
+  socialIcons = [
+    {name = "github", url = "https://github.com/your-handle"},
+    {name = "twitter", url = "https://x.com/your-handle"},
+    {name = "linkedin", url = "https://www.linkedin.com/in/your-handle"},
+    {name = "email", url = "mailto:hello@example.com"}
+  ]
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    pre = "<span data-feather='home'></span>"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "Posts"
+    pre = "<span data-feather='book'></span>"
+    url = "/posts/"
+    weight = 2
+
+  [[menu.main]]
+    name = "About"
+    pre = "<span data-feather='user'></span>"
+    url = "/about/"
+    weight = 3
+
+  [[menu.main]]
+    name = "Tags"
+    pre = "<span data-feather='tag'></span>"
+    url = "/tags/"
+    weight = 4
+
+  [[menu.main]]
+    name = "RSS"
+    pre = "<span data-feather='rss'></span>"
+    url = "/index.xml"
+    weight = 5
