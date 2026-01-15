@@ -1,4 +1,4 @@
-baseURL = "http://localhost:1313/"
+baseURL = "https://avtandili.ge/"
 languageCode = "en-us"
 title = "My Hugo Site"
 theme = "gokarna"
