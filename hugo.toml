@@ -27,21 +27,101 @@ theme = "gokarna"
   ]
 
   customCommentHTML = """
-    <script src="https://giscus.app/client.js"
-        data-repo="AVTUNEY/time-waste"
-        data-repo-id="R_kgDOQ6aI3A"
-        data-category="General"
-        data-category-id="DIC_kwDOQ6aI3M4C1ANi"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="1"
-        data-input-position="top"
-        data-theme="dark_protanopia"
-        data-lang="en"
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async>
+    <div class="giscus"></div>
+    <script>
+      (function() {
+        var THEME_PREF_STORAGE_KEY = "theme-preference";
+        var GISCUS_LIGHT = "light";
+        var GISCUS_DARK = "dark_dimmed";
+
+        function getPreferredTheme() {
+          var stored = localStorage.getItem(THEME_PREF_STORAGE_KEY);
+          if (stored === "dark" || stored === "light") {
+            return stored;
+          }
+          return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        function giscusThemeFor(theme) {
+          return theme === "dark" ? GISCUS_DARK : GISCUS_LIGHT;
+        }
+
+        function setGiscusTheme(theme) {
+          var iframe = document.querySelector("iframe.giscus-frame");
+          if (!iframe) {
+            return;
+          }
+          iframe.contentWindow.postMessage(
+            { giscus: { setConfig: { theme: giscusThemeFor(theme) } } },
+            "https://giscus.app"
+          );
+        }
+
+        function loadGiscus() {
+          var script = document.createElement("script");
+          script.src = "https://giscus.app/client.js";
+          script.setAttribute("data-repo", "AVTUNEY/time-waste");
+          script.setAttribute("data-repo-id", "R_kgDOQ6aI3A");
+          script.setAttribute("data-category", "General");
+          script.setAttribute("data-category-id", "DIC_kwDOQ6aI3M4C1ANi");
+          script.setAttribute("data-mapping", "pathname");
+          script.setAttribute("data-strict", "0");
+          script.setAttribute("data-reactions-enabled", "1");
+          script.setAttribute("data-emit-metadata", "1");
+          script.setAttribute("data-input-position", "top");
+          script.setAttribute("data-theme", giscusThemeFor(getPreferredTheme()));
+          script.setAttribute("data-lang", "en");
+          script.setAttribute("data-loading", "lazy");
+          script.crossOrigin = "anonymous";
+          script.async = true;
+          var container = document.querySelector(".giscus");
+          if (container) {
+            container.appendChild(script);
+          }
+        }
+
+        function bindThemeToggle() {
+          var toggles = document.querySelectorAll(".dark-theme-toggle");
+          if (!toggles.length) {
+            return;
+          }
+          toggles.forEach(function(toggle) {
+            toggle.addEventListener("click", function() {
+              setTimeout(function() {
+                setGiscusTheme(getPreferredTheme());
+              }, 0);
+            });
+          });
+        }
+
+        function bindSystemTheme() {
+          if (!window.matchMedia) {
+            return;
+          }
+          var media = window.matchMedia("(prefers-color-scheme: dark)");
+          media.addEventListener("change", function(event) {
+            if (localStorage.getItem(THEME_PREF_STORAGE_KEY)) {
+              return;
+            }
+            setGiscusTheme(event.matches ? "dark" : "light");
+          });
+        }
+
+        window.addEventListener("message", function(event) {
+          if (event.origin !== "https://giscus.app") {
+            return;
+          }
+          if (event.data && event.data.giscus && event.data.giscus.discussion) {
+            setGiscusTheme(getPreferredTheme());
+          }
+        });
+
+        loadGiscus();
+        bindThemeToggle();
+        bindSystemTheme();
+      })();
     </script>
   """
 
