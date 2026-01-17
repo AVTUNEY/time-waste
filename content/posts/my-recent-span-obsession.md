@@ -9,7 +9,7 @@ description: "Why Span<T> reshaped how I think about allocations, hot paths, and
 
 Lately, I’ve become obsessed with `Span<T>`.
 
-I remember that in one of his talks and interviews, David Fowler mentioned multiple times how important `Span<T>` is — especially for modern .NET, which is essentially built on top of it. Wherever performance matters, you’ll almost always find `Span<T>` somewhere under the hood.
+I remember that in one of his talks and interviews, David Fowler mentioned multiple times how important `Span<T>` is especially for modern .NET, which is essentially built on top of it. Wherever performance matters, you’ll almost always find `Span<T>` somewhere under the hood.
 
 What’s funny is how many critical systems rely on it.
 
