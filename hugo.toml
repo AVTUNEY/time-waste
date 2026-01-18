@@ -8,6 +8,7 @@ theme = "gokarna"
   avatarAltText = "Site avatar"
   avatarSize = "size-m"
   avatarURL = "/images/azdevsummit.jpeg"
+  ogImage = "/images/valeera.webp"
   dateFormat = "Jan 2, 2006"
   description = "Notes, projects, and thoughts."
   displayReadingTime = true
