@@ -66,7 +66,8 @@
     <meta property="og:image:secure_url" content="{{ $imageAbs }}">
     <meta property="og:image:alt" content="{{ $title }}">
     {{ with .Site.LanguageCode }}
-    <meta property="og:locale" content="{{ . }}">
+    {{ $ogLocale := replace . "-" "_" }}
+    <meta property="og:locale" content="{{ $ogLocale }}">
     {{ end }}
 
     <meta name="twitter:card" content="summary_large_image">

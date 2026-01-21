@@ -1,5 +1,5 @@
 baseURL = "https://avtandili.ge/"
-languageCode = "en-us"
+languageCode = "en-US"
 title = "Avtandil's Dev Log"
 theme = "gokarna"
 enableRobotsTXT = true
@@ -8,6 +8,9 @@ enableGitInfo = true
 [sitemap]
   changefreq = "weekly"
   priority = 0.5
+
+[taxonomies]
+  tag = "tags"
 
 [frontmatter]
   lastmod = [":git", "lastmod", "date", "publishDate"]
