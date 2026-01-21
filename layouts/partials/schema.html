@@ -1,4 +1,6 @@
 {{ $siteURL := strings.TrimSuffix "/" .Site.BaseURL }}
+{{ $siteId := printf "%s/#website" $siteURL }}
+{{ $personId := printf "%s/#person" $siteURL }}
 {{ $siteName := .Site.Title }}
 {{ $siteDesc := .Site.Params.Description | default "" }}
 {{ $authorName := .Site.Params.Author | default $siteName }}
@@ -12,7 +14,7 @@
   {{ end }}
 {{ end }}
 
-{{ $person := dict "@type" "Person" "name" $authorName "url" $siteURL }}
+{{ $person := dict "@type" "Person" "@id" $personId "name" $authorName "url" $siteURL }}
 {{ if gt (len $sameAs) 0 }}
   {{ $person = merge $person (dict "sameAs" $sameAs) }}
 {{ end }}
@@ -20,6 +22,7 @@
 {{ $website := dict
   "@context" "https://schema.org"
   "@type" "WebSite"
+  "@id" $siteId
   "name" $siteName
   "url" $siteURL
   "description" $siteDesc
@@ -54,7 +57,7 @@
     "publisher" $person
     "inLanguage" .Site.LanguageCode
     "url" .Permalink
-    "isPartOf" (dict "@id" (printf "%s#website" $siteURL))
+    "isPartOf" (dict "@id" $siteId)
   }}
   {{ with .Params.tags }}
     {{ $post = merge $post (dict "keywords" (delimit . ", ")) }}
@@ -68,7 +71,7 @@
     "url" .Permalink
     "description" $description
     "inLanguage" .Site.LanguageCode
-    "isPartOf" (dict "@id" (printf "%s#website" $siteURL))
+    "isPartOf" (dict "@id" $siteId)
   }}
 <script type="application/ld+json">{{ $page | jsonify }}</script>
 {{ end }}

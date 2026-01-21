@@ -1,6 +1,7 @@
 ---
 title: "About"
 description: "About Avtandil Ushikishvili: .NET lead engineer, podcaster, and community builder."
+date: 2024-01-01T00:00:00+04:00
 type: "page"
 draft: false
 ---

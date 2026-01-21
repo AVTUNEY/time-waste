@@ -85,8 +85,14 @@
 
     <!-- SEO canonicals: helps Google understand your site better when using marketing campaign tagging etc -->
     <link rel="canonical" href="{{ .Permalink }}">
-    {{ with .OutputFormats.Get "RSS" }}
+    {{ if .IsHome }}
+      {{ with (.Site.GetPage "section" "posts").OutputFormats.Get "RSS" }}
     <link rel="alternate" type="{{ .MediaType.Type }}" title="{{ $.Site.Title }}" href="{{ .Permalink }}">
+      {{ end }}
+    {{ else }}
+      {{ with .OutputFormats.Get "RSS" }}
+    <link rel="alternate" type="{{ .MediaType.Type }}" title="{{ $.Site.Title }}" href="{{ .Permalink }}">
+      {{ end }}
     {{ end }}
 
     {{ $cssNormalize := resources.Get "css/normalize.min.css" }}
