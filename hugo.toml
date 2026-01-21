@@ -12,6 +12,9 @@ enableGitInfo = true
 [frontmatter]
   lastmod = [":git", "lastmod", "date", "publishDate"]
 
+[minify]
+  disableXML = true
+
 [params]
   accentColor = "#E4572E"
   avatarAltText = "Site avatar"
