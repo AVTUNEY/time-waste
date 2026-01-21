@@ -47,6 +47,9 @@
     <atom:link href="{{ .Permalink }}" rel="self" type="{{ .MediaType.Type }}" />
     {{- range $pages -}}
     {{- $itemTitle := .Title -}}
+    {{- $itemTitle = replace $itemTitle "&" "&#x26;" -}}
+    {{- $itemTitle = replace $itemTitle "<" "&#x3C;" -}}
+    {{- $itemTitle = replace $itemTitle ">" "&#x3E;" -}}
 
     {{- $itemDescription := .Description -}}
     {{- if not $itemDescription -}}
@@ -59,7 +62,7 @@
     {{- $content = replaceRE " (style)='[^']*'" "" $content -}}
     {{- $content = replaceRE "(href|src)=\"/" (printf "$1=\"%s/" $baseURL) $content -}}
     <item>
-      <title>{{ $itemTitle }}</title>
+      <title>{{ $itemTitle | safeHTML }}</title>
       <link>{{ .Permalink }}</link>
       <guid>{{ .Permalink }}</guid>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
