@@ -1,5 +1,6 @@
 ---
 title: "About"
+description: "About Avtandil Ushikishvili: .NET lead engineer, podcaster, and community builder."
 type: "page"
 draft: false
 ---

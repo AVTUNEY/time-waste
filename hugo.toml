@@ -2,6 +2,11 @@ baseURL = "https://avtandili.ge/"
 languageCode = "en-us"
 title = "Avtandil's Dev Log"
 theme = "gokarna"
+enableRobotsTXT = true
+
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
 
 [params]
   accentColor = "#E4572E"
@@ -9,6 +14,8 @@ theme = "gokarna"
   avatarSize = "size-m"
   avatarURL = "/images/azdevsummit.jpeg"
   ogImage = "/images/valeera.webp"
+  author = "Avtandil Ushikishvili"
+  twitterHandle = "@avtuney_"
   dateFormat = "Jan 2, 2006"
   description = "Notes, projects, and thoughts."
   displayReadingTime = true

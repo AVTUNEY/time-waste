@@ -5,6 +5,7 @@ draft: false
 type: "post"
 tags: ["dotnet", "csharp", "performance", "span"]
 description: "Why Span<T> reshaped how I think about allocations, hot paths, and real-world performance."
+image: "/images/valeera.webp"
 ---
 
 Lately, I’ve become obsessed with `Span<T>`.

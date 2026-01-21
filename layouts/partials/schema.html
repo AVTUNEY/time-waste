@@ -1,0 +1,74 @@
+{{ $siteURL := strings.TrimSuffix "/" .Site.BaseURL }}
+{{ $siteName := .Site.Title }}
+{{ $siteDesc := .Site.Params.Description | default "" }}
+{{ $authorName := .Site.Params.Author | default $siteName }}
+{{ $image := .Params.image | default (.Site.Params.ogImage | default (.Scratch.Get "avatarImgSrc")) }}
+{{ $imageAbs := absURL $image }}
+
+{{ $sameAs := slice }}
+{{ range .Site.Params.socialIcons }}
+  {{ if and .url (hasPrefix .url "http") }}
+    {{ $sameAs = $sameAs | append .url }}
+  {{ end }}
+{{ end }}
+
+{{ $person := dict "@type" "Person" "name" $authorName "url" $siteURL }}
+{{ if gt (len $sameAs) 0 }}
+  {{ $person = merge $person (dict "sameAs" $sameAs) }}
+{{ end }}
+
+{{ $website := dict
+  "@context" "https://schema.org"
+  "@type" "WebSite"
+  "name" $siteName
+  "url" $siteURL
+  "description" $siteDesc
+}}
+{{ $website = merge $website (dict "publisher" $person) }}
+
+<script type="application/ld+json">{{ $website | jsonify }}</script>
+
+{{ $pageTitle := .Title | default .Site.Title }}
+{{ $description := "" }}
+{{ if .Description }}
+  {{ $description = .Description }}
+{{ else if .Site.Params.Description }}
+  {{ $description = .Site.Params.Description }}
+{{ else }}
+  {{ $description = (.Summary | default .Content) | plainify }}
+{{ end }}
+{{ $description = $description | truncate 160 }}
+{{ $modified := .Lastmod | default .Date }}
+
+{{ if and .IsPage (eq .Section "posts") }}
+  {{ $post := dict
+    "@context" "https://schema.org"
+    "@type" "BlogPosting"
+    "headline" $pageTitle
+    "description" $description
+    "image" (slice $imageAbs)
+    "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+    "dateModified" ($modified.Format "2006-01-02T15:04:05Z07:00")
+    "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+    "author" $person
+    "publisher" $person
+    "inLanguage" .Site.LanguageCode
+    "url" .Permalink
+    "isPartOf" (dict "@id" (printf "%s#website" $siteURL))
+  }}
+  {{ with .Params.tags }}
+    {{ $post = merge $post (dict "keywords" (delimit . ", ")) }}
+  {{ end }}
+<script type="application/ld+json">{{ $post | jsonify }}</script>
+{{ else if .IsPage }}
+  {{ $page := dict
+    "@context" "https://schema.org"
+    "@type" "WebPage"
+    "name" $pageTitle
+    "url" .Permalink
+    "description" $description
+    "inLanguage" .Site.LanguageCode
+    "isPartOf" (dict "@id" (printf "%s#website" $siteURL))
+  }}
+<script type="application/ld+json">{{ $page | jsonify }}</script>
+{{ end }}

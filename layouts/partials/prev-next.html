@@ -1,0 +1,25 @@
+{{ if .PrevInSection }}
+<div class="prev">
+    <a class="prev-link" href="{{ .PrevInSection.Permalink }}">
+        <div class="prev-icon">
+            &larr;
+        </div>
+        <div class="prev-title">
+            {{ .PrevInSection.Title }}
+        </div>
+    </a>
+</div>
+{{ end }}
+
+{{ if .NextInSection }}
+<div class="next">
+    <a class="next-link" href="{{ .NextInSection.Permalink }}">
+        <div class="next-title">
+            {{ .NextInSection.Title }}
+        </div>
+        <div class="next-icon">
+            &rarr;
+        </div>
+    </a>
+</div>
+{{ end }}

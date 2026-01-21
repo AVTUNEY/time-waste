@@ -5,6 +5,7 @@ draft: false
 type: "post"
 tags: ["dotnet", "csharp", "performance", "span", "linq", "zlinq", "benchmarks"]
 description: "A deep dive into LINQ performance, value enumerators, Span<T>, and how ZLinq achieves near for-loop speed with zero-allocation pipelines"
+image: "/images/zlinq-benchmarks.png"
 ---
 
 ## A decade later, things finally start to click
