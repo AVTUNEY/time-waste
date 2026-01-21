@@ -3,10 +3,14 @@ languageCode = "en-us"
 title = "Avtandil's Dev Log"
 theme = "gokarna"
 enableRobotsTXT = true
+enableGitInfo = true
 
 [sitemap]
   changefreq = "weekly"
   priority = 0.5
+
+[frontmatter]
+  lastmod = [":git", "lastmod", "date", "publishDate"]
 
 [params]
   accentColor = "#E4572E"

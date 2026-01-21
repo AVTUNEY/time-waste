@@ -27,8 +27,10 @@
 
 {{- $lastBuild := now -}}
 {{- with index $pages 0 -}}
-  {{- $lastBuild = .Date -}}
+  {{- $lastBuild = .Lastmod -}}
 {{- end -}}
+
+{{- $baseURL := strings.TrimSuffix "/" .Site.BaseURL -}}
 
 {{- with .OutputFormats.Get "RSS" -}}
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
@@ -44,17 +46,23 @@
     <lastBuildDate>{{ $lastBuild.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</lastBuildDate>
     <atom:link href="{{ .Permalink }}" rel="self" type="{{ .MediaType.Type }}" />
     {{- range $pages -}}
+    {{- $itemTitle := .Title -}}
+
     {{- $itemDescription := .Description -}}
     {{- if not $itemDescription -}}
       {{- $itemDescription = .Summary | plainify -}}
     {{- end -}}
+    {{- $content := .Content -}}
+    {{- $content = replaceRE " (style)=\"[^\"]*\"" "" $content -}}
+    {{- $content = replaceRE " (style)='[^']*'" "" $content -}}
+    {{- $content = replaceRE "(href|src)=\"/" (printf "$1=\"%s/" $baseURL) $content -}}
     <item>
-      <title>{{ .Title }}</title>
+      <title>{{ $itemTitle }}</title>
       <link>{{ .Permalink }}</link>
       <guid>{{ .Permalink }}</guid>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
       <description>{{ $itemDescription | truncate 200 }}</description>
-      <content:encoded>{{ printf "<![CDATA[%s]]>" .Content | safeHTML }}</content:encoded>
+      <content:encoded>{{ printf "<![CDATA[%s]]>" $content | safeHTML }}</content:encoded>
     </item>
     {{- end -}}
   </channel>
