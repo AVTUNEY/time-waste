@@ -2,6 +2,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Preconnect for external resources -->
+    <link rel="preconnect" href="https://giscus.app" crossorigin>
+    <link rel="dns-prefetch" href="https://giscus.app">
+
     <style>
         :root {
             --accent-color: {{ .Site.Params.AccentColor | default "#FF4D4D" }};
