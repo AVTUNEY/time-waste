@@ -29,7 +29,9 @@
 }}
 {{ $website = merge $website (dict "publisher" $person) }}
 
-<script type="application/ld+json">{{ $website | jsonify }}</script>
+<script type="application/ld+json">
+{{ $website | jsonify | safeJS }}
+</script>
 
 {{ $pageTitle := .Title | default .Site.Title }}
 {{ $description := "" }}
@@ -64,7 +66,9 @@
   {{ with .Params.tags }}
     {{ $post = merge $post (dict "keywords" (delimit . ", ")) }}
   {{ end }}
-<script type="application/ld+json">{{ $post | jsonify }}</script>
+<script type="application/ld+json">
+{{ $post | jsonify | safeJS }}
+</script>
 {{ else if .IsPage }}
   {{ $page := dict
     "@context" "https://schema.org"
@@ -75,5 +79,7 @@
     "inLanguage" .Site.LanguageCode
     "isPartOf" (dict "@id" $siteId)
   }}
-<script type="application/ld+json">{{ $page | jsonify }}</script>
+<script type="application/ld+json">
+{{ $page | jsonify | safeJS }}
+</script>
 {{ end }}
