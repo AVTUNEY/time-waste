@@ -58,6 +58,8 @@
     "inLanguage" .Site.LanguageCode
     "url" .Permalink
     "isPartOf" (dict "@id" $siteId)
+    "articleSection" "Posts"
+    "wordCount" .WordCount
   }}
   {{ with .Params.tags }}
     {{ $post = merge $post (dict "keywords" (delimit . ", ")) }}

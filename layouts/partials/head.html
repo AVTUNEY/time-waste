@@ -42,6 +42,7 @@
     <title>{{ $title }}</title>
     <meta name="description" content="{{ $description }}">
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="{{ .Site.Params.AccentColor | default "#FF4D4D" }}">
     {{ if gt (len $keywords) 0 }}
     <meta name="keywords" content="{{ delimit $keywords ", " }}">
     {{ end }}
@@ -78,6 +79,11 @@
     {{ with .Site.LanguageCode }}
     {{ $ogLocale := replace . "-" "_" }}
     <meta property="og:locale" content="{{ $ogLocale }}">
+    {{ end }}
+
+    <!-- Breadcrumbs for better SEO -->
+    {{ if and .IsPage (eq .Section "posts") }}
+    <meta property="article:section" content="Posts">
     {{ end }}
 
     <meta name="twitter:card" content="summary_large_image">
