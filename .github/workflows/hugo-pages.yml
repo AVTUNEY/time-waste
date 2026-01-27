@@ -55,3 +55,8 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+      
+      - name: Ping Google for Indexing
+        run: |
+          curl -s "https://www.google.com/ping?sitemap=https://avtandili.ge/sitemap.xml" || true
+          echo "Sitemap pinged to Google"
