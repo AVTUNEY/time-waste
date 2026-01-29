@@ -34,11 +34,18 @@ jobs:
           hugo-version: "0.125.7"
           extended: true
 
-      - name: Build
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Build with JSON-LD fix
         env:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
-        run: hugo --minify
+        run: |
+          hugo --minify
+          python3 fix-jsonld.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

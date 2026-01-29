@@ -30,7 +30,7 @@
 {{ $website = merge $website (dict "publisher" $person) }}
 
 <script type="application/ld+json">
-{{ $website | jsonify | safeJS }}
+{{ $website | jsonify }}
 </script>
 
 {{ $pageTitle := .Title | default .Site.Title }}
@@ -67,7 +67,7 @@
     {{ $post = merge $post (dict "keywords" (delimit . ", ")) }}
   {{ end }}
 <script type="application/ld+json">
-{{ $post | jsonify | safeJS }}
+{{ $post | jsonify }}
 </script>
 {{ else if .IsPage }}
   {{ $page := dict
@@ -80,6 +80,6 @@
     "isPartOf" (dict "@id" $siteId)
   }}
 <script type="application/ld+json">
-{{ $page | jsonify | safeJS }}
+{{ $page | jsonify }}
 </script>
 {{ end }}
