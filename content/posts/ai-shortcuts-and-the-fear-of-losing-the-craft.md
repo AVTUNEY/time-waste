@@ -5,7 +5,7 @@ draft: false
 type: "post"
 tags: ["ai", "software-engineering", "career", "learning", "development", "thoughts"]
 description: "Reflections on artificial intelligence, shortcuts in learning, and why struggling might still be essential for becoming a great software engineer."
-image: "/images/no-ai.jpeg"
+image: "/images/anti-ai.jpg"
 ---
 
 I would probably call artificial intelligence one of the greatest achievements of modern development and, at the same time, one of its biggest mistakes. Every time I open LinkedIn, I see countless new projects being built by absolute beginners. On one hand, this is amazing. On the other, I honestly think it's dangerous.
