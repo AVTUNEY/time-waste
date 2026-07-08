@@ -277,7 +277,7 @@ A WAL record is not just a message saying "row updated".
 
 It needs enough information to redo or undo the change.
 
-A simplified C# model:
+A simplified C# example:
 
 ```csharp
 public readonly record struct TxnId(long Value);
@@ -567,11 +567,11 @@ The `pageLSN` check handles that.
 
 ## Commit is a log record
 
-Before reading about WAL properly, I imagined commit like this:
+Before reading about WAL properly, I thought commit worked like this:
 
 > The database writes the changed rows to disk and then returns success.
 
-That is not the normal model with WAL.
+That is not how it usually works with WAL.
 
 With WAL, a transaction is committed when its commit record is durable.
 
@@ -605,7 +605,7 @@ This is why `fsync` or equivalent durable flushing matters.
 
 Writing to a file does not always mean durable. The bytes may still be in the OS page cache.
 
-In C#, the simplified mental model is:
+In C#, the rough version is:
 
 ```csharp
 fileStream.Write(bytes);
@@ -741,7 +741,7 @@ WAL is not free.
 
 Every update writes log bytes.
 
-Simple model:
+Simple calculation:
 
 ```text
 N = updates per second
@@ -1130,11 +1130,11 @@ This makes rollback itself crash-safe.
 
 ## Checkpoints
 
-I used to think checkpoint means:
+I thought checkpoint means:
 
 > Everything dirty is written to disk.
 
-That is not always the right mental model.
+That is not always correct.
 
 In WAL-based systems, a checkpoint often means:
 
@@ -1175,7 +1175,7 @@ instead of from the beginning of the log.
 
 This bounds recovery time.
 
-Simple model:
+Simple calculation:
 
 ```text
 R = WAL generation rate in MB/s
@@ -1326,7 +1326,7 @@ This example is small, but it shows the core idea.
 
 WAL lets the database handle many ugly disk states and still return to a valid transaction state.
 
-## The model I keep in my head
+## The basic rule
 
 The database state is `S`.
 
