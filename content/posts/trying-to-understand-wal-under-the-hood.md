@@ -5,6 +5,7 @@ draft: false
 type: "post"
 tags: ["databases", "relational-database", "storage-engine", "wal", "transactions", "systems"]
 description: "My notes while trying to understand how write-ahead logging works inside relational databases, from pages and LSNs to redo, undo, checkpoints, and crash recovery."
+image: "/images/wal.jpg"
 ---
 
 Lately I have been working on a relational database and trying to understand how databases work under the hood.
