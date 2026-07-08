@@ -1332,33 +1332,23 @@ The database state is `S`.
 
 Each log record is an operation:
 
-```text
-r_i : S -> S
-```
+> rᵢ : S → S
 
 The log is ordered:
 
-```text
-L = [r_1, r_2, ..., r_n]
-```
+> L = ⟨r₁, r₂, …, rₙ⟩
 
 Applying the log is function composition:
 
-```text
-S_n = r_n(...r_2(r_1(S_0)))
-```
+> Sₙ = (rₙ ∘ … ∘ r₂ ∘ r₁)(S₀)
 
 After a crash, the database only has the valid durable prefix of WAL:
 
-```text
-L[0..k]
-```
+> Lₖ = L[0..k]
 
 Recovery must produce a state where:
 
-```text
-effects(T) are visible iff commit(T) is in L[0..k]
-```
+> effects(T) are visible ⇔ commit(T) ∈ Lₖ
 
 That is the real promise.
 
