@@ -35,9 +35,7 @@ The more useful version is:
 
 In database terms, the rule is usually expressed like this:
 
-```text
-flushedLSN >= pageLSN
-```
+> flushedLSN ≥ pageLSN
 
 This is the main invariant.
 
@@ -166,9 +164,7 @@ The page is now dirty.
 
 Dirty means:
 
-```text
-memory version != disk version
-```
+> memory version ≠ disk version
 
 Databases keep dirty pages in memory all the time. They have to. If every update immediately wrote the full page to disk, performance would be terrible.
 
@@ -266,10 +262,9 @@ If we want a practical high-performance buffer pool, we accept `steal + no-force
 
 Then WAL is needed because crash recovery must handle both cases:
 
-```text
-committed but not on disk     => redo
-uncommitted but already disk  => undo
-```
+> committed but not on disk → redo
+>
+> uncommitted but already on disk → undo
 
 ## What a WAL record contains
 
@@ -496,9 +491,7 @@ The durable WAL is the longest valid prefix of the log.
 
 In math form:
 
-```text
-validPrefix(WAL) = longest prefix where every record is complete and checksum-valid
-```
+> validPrefix(WAL) = longest complete, checksum-valid prefix
 
 Recovery must work only from that prefix.
 
@@ -512,30 +505,23 @@ LSN means Log Sequence Number.
 
 You can think of it as a byte offset in the WAL stream:
 
-```text
-LSN = offset inside WAL
-```
+> LSN = offset inside WAL
 
 If:
 
-```text
-LSN(A) = 100
-LSN(B) = 180
-```
+> LSN(A) = 100
+>
+> LSN(B) = 180
 
 then `A` happened before `B`.
 
 So WAL gives the database a total order of changes:
 
-```text
-r_i < r_j  iff  LSN(r_i) < LSN(r_j)
-```
+> rᵢ < rⱼ ⇔ LSN(rᵢ) < LSN(rⱼ)
 
 Every page stores the latest LSN that affected it:
 
-```text
-pageLSN(p) = max { LSN(r) | r changed page p and page p includes r }
-```
+> pageLSN(p) = max { LSN(r) ∣ r changed page p and page p includes r }
 
 This is used during redo.
 
@@ -555,9 +541,7 @@ This makes redo idempotent.
 
 Idempotent means applying it twice has the same effect as applying it once:
 
-```text
-redo(r, redo(r, page)) = redo(r, page)
-```
+> redo(r, redo(r, page)) = redo(r, page)
 
 That matters because recovery itself may crash.
 
@@ -597,9 +581,7 @@ After crash, recovery undoes it.
 
 So:
 
-```text
-committed(T) <=> commitLSN(T) <= flushedLSN
-```
+> committed(T) ⇔ commitLSN(T) ≤ flushedLSN
 
 This is why `fsync` or equivalent durable flushing matters.
 
@@ -698,15 +680,11 @@ lambda = commits arriving per second
 
 then roughly:
 
-```text
-commits_per_flush ≈ lambda * F
-```
+> commits per flush ≈ λ × F
 
 and:
 
-```text
-amortized_flush_cost ≈ F / commits_per_flush
-```
+> amortized flush cost ≈ F / commits per flush
 
 Not exact queueing theory, but good enough for intuition.
 
@@ -729,9 +707,7 @@ public sealed class CommitWaiter
 
 A background flusher can take all waiters, find the highest commit LSN, flush once, then complete every waiter with:
 
-```text
-waiter.CommitLsn <= wal.FlushedLsn
-```
+> waiter.CommitLsn ≤ wal.FlushedLsn
 
 This is one of those details that sounds like optimization, but it is actually central to database throughput.
 
@@ -743,53 +719,40 @@ Every update writes log bytes.
 
 Simple calculation:
 
-```text
-N = updates per second
-B = average WAL bytes per update
-C = commits per second
-K = average commit record size
-```
+- `N`: updates per second
+- `B`: average WAL bytes per update
+- `C`: commits per second
+- `K`: average commit record size
 
 Then:
 
-```text
-WAL bandwidth ≈ N * B + C * K
-```
+> WAL bandwidth ≈ N × B + C × K
 
 If an update logs metadata `M`, before image of length `L`, and after image of length `L`, then:
 
-```text
-B = M + 2L
-```
+> B = M + 2L
 
 So:
 
-```text
-WAL bandwidth ≈ N * (M + 2L) + C * K
-```
+> WAL bandwidth ≈ N × (M + 2L) + C × K
 
 Example:
 
-```text
-N = 100,000 updates/sec
-M = 32 bytes metadata
-L = 8 bytes
-```
+- `N`: 100,000 updates/sec
+- `M`: 32 bytes metadata
+- `L`: 8 bytes
 
 Then:
 
-```text
-B = 32 + 16 = 48 bytes
-WAL ≈ 100,000 * 48 = 4.8 MB/sec
-```
+> B = 32 + 16 = 48 bytes
+>
+> WAL ≈ 100,000 × 48 = 4.8 MB/sec
 
 Not bad.
 
 But if each update logs a full 8KB page:
 
-```text
-100,000 * 8192 bytes ≈ 781 MB/sec
-```
+> 100,000 × 8192 bytes ≈ 781 MB/sec
 
 Only for WAL.
 
@@ -850,24 +813,20 @@ wal_000003
 
 If segment size is `S` and absolute LSN is `L`, then:
 
-```text
-segment = floor(L / S)
-offset  = L mod S
-```
+> segment = ⌊L / S⌋
+>
+> offset = L mod S
 
 For example, with 16MB segments:
 
-```text
-S = 16 * 1024 * 1024
-L = 40MB
-```
+- `S`: 16 × 1024 × 1024
+- `L`: 40MB
 
 Then:
 
-```text
-segment = floor(40 / 16) = 2
-offset = 8MB
-```
+> segment = ⌊40 / 16⌋ = 2
+>
+> offset = 8MB
 
 This matters because the database has to know which WAL files are still needed.
 
@@ -930,24 +889,19 @@ Undo then removes transactions that did not commit.
 
 Conceptually:
 
-```text
-after redo = database state at crash time
-after undo = database state with only committed transactions
-```
+> after redo = database state at crash time
+>
+> after undo = database state with only committed transactions
 
 More formally:
 
-```text
-H = log history
-C = committed transactions
-U = uncommitted loser transactions
-```
+- `H`: log history
+- `C`: committed transactions
+- `U`: uncommitted loser transactions
 
 Recovery wants:
 
-```text
-state_final ≡ apply({ r in H | txn(r) in C })
-```
+> S_final ≡ apply({ r ∈ H ∣ txn(r) ∈ C })
 
 Every committed transaction survives.
 
@@ -977,10 +931,9 @@ What do we know?
 
 So:
 
-```text
-winners = { T1 }
-losers  = { T2, T3 }
-```
+> winners = { T1 }
+>
+> losers = { T2, T3 }
 
 The disk may be in many possible states.
 
@@ -1006,10 +959,9 @@ So `T1` remains.
 
 This is the main promise:
 
-```text
-committed effects stay
-uncommitted effects go away
-```
+> committed effects stay
+>
+> uncommitted effects go away
 
 ## Transaction chains
 
@@ -1167,9 +1119,7 @@ pageId -> recLSN
 
 Redo can start from:
 
-```text
-min(recLSN)
-```
+> min(recLSN)
 
 instead of from the beginning of the log.
 
@@ -1177,37 +1127,27 @@ This bounds recovery time.
 
 Simple calculation:
 
-```text
-R = WAL generation rate in MB/s
-T = seconds between checkpoints
-B = WAL scan bandwidth in MB/s
-```
+- `R`: WAL generation rate in MB/s
+- `T`: seconds between checkpoints
+- `B`: WAL scan bandwidth in MB/s
 
 Then:
 
-```text
-recovery_scan_time ≈ (R * T) / B
-```
+> recovery scan time ≈ (R × T) / B
 
 Example:
 
-```text
-R = 200 MB/s
-T = 60 seconds
-B = 1000 MB/s
-```
+- `R`: 200 MB/s
+- `T`: 60 seconds
+- `B`: 1000 MB/s
 
 Then:
 
-```text
-recovery_scan_time ≈ (200 * 60) / 1000 = 12 seconds
-```
+> recovery scan time ≈ (200 × 60) / 1000 = 12 seconds
 
 If checkpoint interval becomes 10 minutes:
 
-```text
-recovery_scan_time ≈ (200 * 600) / 1000 = 120 seconds
-```
+> recovery scan time ≈ (200 × 600) / 1000 = 120 seconds
 
 This is only scan time, not full recovery time, but the direction is clear.
 
@@ -1310,7 +1250,7 @@ The transaction committed, but only the first update reached disk.
 Recovery scans WAL:
 
 ```text
-LSN 100: pageLSN >= 100, skip
+LSN 100: pageLSN ≥ 100, skip
 LSN 130: pageLSN < 130, redo
 LSN 160: commit, mark T1 committed
 ```
@@ -1364,14 +1304,12 @@ But if the WAL rules are preserved, recovery can fix it.
 
 The main rules are:
 
-```text
 1. Do not write a page before its log record is durable.
 2. A transaction commits only when its commit record is durable.
-3. Use pageLSN to make redo idempotent.
+3. Use `pageLSN` to make redo idempotent.
 4. Use before images or undo information to roll back losers.
 5. Log undo actions with CLRs so recovery can survive another crash.
 6. Use checkpoints to reduce how much log must be scanned.
-```
 
 This is why WAL is such an important idea.
 
