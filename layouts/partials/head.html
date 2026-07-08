@@ -20,13 +20,23 @@
         }
 
         .list-posts .post-list-item .post-title {
+            align-items: baseline;
+            display: flex;
             flex: 1;
+            gap: 18px;
+            justify-content: space-between;
             margin: 0;
             min-width: 0;
         }
 
         .list-posts .post-list-item .post-link {
+            min-width: 0;
             width: auto;
+        }
+
+        .list-posts .post-list-item .post-date {
+            flex: 0 0 auto;
+            white-space: nowrap;
         }
 
         .post-list-image {
@@ -52,6 +62,12 @@
             .post-list-image {
                 flex-basis: 88px;
                 height: 52px;
+            }
+
+            .list-posts .post-list-item .post-title {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 2px;
             }
         }
     </style>
