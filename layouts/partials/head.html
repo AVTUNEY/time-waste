@@ -11,6 +11,49 @@
             --accent-color: {{ .Site.Params.AccentColor | default "#FF4D4D" }};
             --font-size: {{ .Site.Params.FontSize | default "1.1rem" }};
         }
+
+        .list-posts .post-list-item {
+            align-items: center;
+            display: flex;
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .list-posts .post-list-item .post-title {
+            flex: 1;
+            margin: 0;
+            min-width: 0;
+        }
+
+        .list-posts .post-list-item .post-link {
+            width: auto;
+        }
+
+        .post-list-image {
+            display: block;
+            flex: 0 0 112px;
+            height: 64px;
+            overflow: hidden;
+        }
+
+        .post-list-image img {
+            display: block;
+            height: 100%;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .list-posts .post-list-item {
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .post-list-image {
+                flex-basis: 88px;
+                height: 52px;
+            }
+        }
     </style>
 
     {{ $pageTitle := .Title | default .Site.Title }}
